@@ -96,15 +96,18 @@ Esta es la forma en que funcionan las aplicaciones populares como la aplicació
 
 Por lo tanto, cuando el cajón está abierto y se presiona el botón Atrás, solo cierra el cajón en lugar de la actividad actual de inicio. 
 A continuación, si el usuario vuelve a presionar el botón Atrás, se debe cerrar la actividad principal.
+En el OnCreate() añadiremos:
 
 ```
-override fun  onBackPressed() {
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START)
-        } else {
-            super.onBackPressed()
-        }
-    }
+onBackPressedDispatcher.addCallback(this /* lifecycle owner */, object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                if (drawer.isDrawerOpen(GravityCompat.START)) {
+                    drawer.closeDrawer(GravityCompat.START)
+                } else {
+                    finish()
+                }
+            }
+        })
 ```
 
 
